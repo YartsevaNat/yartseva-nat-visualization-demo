@@ -1,6 +1,80 @@
 import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+# Настройка стиля seaborn
+sns.set_style('whitegrid')
+
+st.title("Дашборд продаж")
+
+# Загрузим данные из CSV (замени путь на свой)
+@st.cache_data
+def load_data():
+    url = "shopping_trends.csv"  # или загрузи локальный файл через st.file_uploader
+    df = pd.read_csv(url)
+    return df
+
+df = load_data()
+
+# Колонки для двух колонок
+col1, col2 = st.columns(2)
+
+# График 1: Распределение возраста покупателей
+with col1:
+    st.subheader("Распределение возраста покупателей")
+    fig, ax = plt.subplots()
+    sns.histplot(df['Age'], bins=20, kde=True, ax=ax, color='skyblue')
+    ax.set_xlabel("Возраст")
+    ax.set_ylabel("Количество")
+    st.pyplot(fig)
+
+# График 2: Средняя сумма покупки по категориям
+with col2:
+    st.subheader("Средняя сумма покупки по категориям")
+    avg_purchase = df.groupby('Category')['Purchase Amount (USD)'].mean().sort_values()
+    fig, ax = plt.subplots()
+    avg_purchase.plot(kind='barh', color='coral', ax=ax)
+    ax.set_xlabel("Средняя сумма покупки (USD)")
+    ax.set_ylabel("Категория")
+    st.pyplot(fig)
+
+# График 3: Пол покупателей
+with col1:
+    st.subheader("Распределение по полу")
+    gender_counts = df['Gender'].value_counts()
+    fig, ax = plt.subplots()
+    gender_counts.plot(kind='pie', autopct='%1.1f%%', startangle=90, colors=['#66b3ff','#ff9999'], ax=ax)
+    ax.set_ylabel('')
+    st.pyplot(fig)
+
+# График 4: Количество покупок по сезонам
+with col2:
+    st.subheader("Количество покупок по сезонам")
+    season_counts = df['Season'].value_counts()
+    fig, ax = plt.subplots()
+    sns.barplot(x=season_counts.index, y=season_counts.values, palette='viridis', ax=ax)
+    ax.set_xlabel("Сезон")
+    ax.set_ylabel("Количество покупок")
+    st.pyplot(fig)
+
+# График 5: Средний рейтинг отзывов по категориям
+with col1:
+    st.subheader("Средний рейтинг отзывов по категориям")
+    avg_rating = df.groupby('Category')['Review Rating'].mean().sort_values()
+    fig, ax = plt.subplots()
+    avg_rating.plot(kind='bar', color='mediumseagreen', ax=ax)
+    ax.set_xlabel("Категория")
+    ax.set_ylabel("Средний рейтинг")
+    st.pyplot(fig)
+
+# График 6: Частота покупок
+with col2:
+    st.subheader("Частота покупок (Frequency of Purchases)")
+    freq_counts = df['Frequency of Purchases'].value_counts().sort_index()
+    fig, ax = plt.subplots(figsize=(6,4))
+    sns.barplot(x=freq_counts.index, y=freq_counts.values, palette='magma', ax=ax)
+    ax.set_xlabel("Частота покупок")
+    ax.set_ylabel("Количество")
+    plt.xticks(rotation=45)
+    st.pyplot(fig)
