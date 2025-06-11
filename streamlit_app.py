@@ -57,15 +57,6 @@ col1, col2 = st.columns(2)
 with col2:
     st.subheader("Средняя сумма покупки по категориям")
     avg_purchase = df.groupby('Category')['Purchase Amount (USD)'].mean().sort_values()
-    avg_purchase.index = [
-        'Одежда' if c == 'Clothes' else
-        'Электроника' if c == 'Electronics' else
-        'Продукты' if c == 'Groceries' else
-        'Косметика' if c == 'Cosmetics' else
-        'Дом' if c == 'Home' else
-        'Другое' if c == 'Other' else c
-        for c in avg_purchase.index
-    ]
     fig, ax = plt.subplots()
     avg_purchase.plot(kind='barh', color='coral', ax=ax)
     ax.set_xlabel("Средняя сумма покупки (USD)")
@@ -76,7 +67,6 @@ with col2:
 with col1:
     st.subheader("Распределение по полу")
     gender_counts = df['Gender'].value_counts()
-    gender_counts.index = ['Женщины' if g == 'Female' else 'Мужчины' for g in gender_counts.index]
     fig, ax = plt.subplots()
     gender_counts.plot(kind='pie', autopct='%1.1f%%', startangle=90, colors=['#66b3ff','#ff9999'], ax=ax)
     ax.set_ylabel('')
@@ -86,13 +76,6 @@ with col1:
 with col2:
     st.subheader("Количество покупок по сезонам")
     season_counts = df['Season'].value_counts()
-    season_counts.index = [
-        'Весна' if s == 'Spring' else
-        'Лето' if s == 'Summer' else
-        'Осень' if s == 'Fall' else
-        'Зима' if s == 'Winter' else s
-        for s in season_counts.index
-    ]
     fig, ax = plt.subplots()
     sns.barplot(x=season_counts.index, y=season_counts.values, palette='viridis', ax=ax)
     ax.set_xlabel("Сезон")
@@ -104,13 +87,6 @@ with col2:
 with col2:
     st.subheader("Частота покупок")
     freq_counts = df['Frequency of Purchases'].value_counts().sort_index()
-    freq_counts.index = [
-        'Ежедневно' if f == 'Everyday' else
-        'Еженедельно' if f == 'Weekly' else
-        'Ежемесячно' if f == 'Monthly' else
-        'Редко' if f == 'Rarely' else f
-        for f in freq_counts.index
-    ]
     fig, ax = plt.subplots(figsize=(6,4))
     sns.barplot(x=freq_counts.index, y=freq_counts.values, palette='magma', ax=ax)
     ax.set_xlabel("Частота покупок")
@@ -132,12 +108,6 @@ with col1:
     st.subheader("Распределение по способу оплаты")
     if 'Payment Method' in df.columns:
         payment_counts = df['Payment Method'].value_counts()
-        payment_counts.index = [
-            'Карта' if p == 'Credit Card' else
-            'Наличные' if p == 'Cash' else
-            'Онлайн' if p == 'Online' else p
-            for p in payment_counts.index
-        ]
         fig, ax = plt.subplots()
         payment_counts.plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=ax, cmap='Pastel1')
         ax.set_ylabel('')
