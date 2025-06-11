@@ -114,7 +114,6 @@ with col1:
         st.pyplot(fig)
     else:
         st.info("Нет данных о способе оплаты.")
-# ...existing code...
 
 df = load_data()
 
