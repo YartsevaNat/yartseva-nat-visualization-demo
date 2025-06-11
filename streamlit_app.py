@@ -70,7 +70,7 @@ with col1:
 
 # График 6: Частота покупок
 with col2:
-    st.subheader("Частота покупок (Frequency of Purchases)")
+    st.subheader("Частота покупок")
     freq_counts = df['Frequency of Purchases'].value_counts().sort_index()
     fig, ax = plt.subplots(figsize=(6,4))
     sns.barplot(x=freq_counts.index, y=freq_counts.values, palette='magma', ax=ax)
