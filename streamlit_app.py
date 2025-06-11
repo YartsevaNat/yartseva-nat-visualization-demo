@@ -114,3 +114,17 @@ with col1:
         st.pyplot(fig)
     else:
         st.info("Нет данных о способе оплаты.")
+# ...existing code...
+
+df = load_data()
+
+# Очистка данных: убираем пробелы и приводим к одному регистру
+df['Gender'] = df['Gender'].astype(str).str.strip().str.capitalize()
+
+# Теперь замена на русский
+df['Gender'] = df['Gender'].replace({
+    'Female': 'Женщины',
+    'Male': 'Мужчины'
+})
+
+# ...остальной код замены...
