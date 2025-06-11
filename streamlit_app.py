@@ -30,12 +30,15 @@ df['Gender'] = df['Gender'].replace({
 
 # Переводим значения столбцов на русский
 df['Category'] = df['Category'].replace({
-    'Clothes': 'Одежда',
+    'Clothing': 'Одежда',
     'Electronics': 'Электроника',
     'Groceries': 'Продукты',
     'Cosmetics': 'Косметика',
     'Home': 'Дом',
-    'Other': 'Другое'
+    'Other': 'Другое',
+    'Footwear': 'Обувь',
+    'Accessories': 'Аксессуары',
+    'Outerwear': 'Верхняя одежда',
 })
 df['Gender'] = df['Gender'].replace({
     'Female': 'Женщины',
@@ -51,13 +54,25 @@ df['Frequency of Purchases'] = df['Frequency of Purchases'].replace({
     'Everyday': 'Ежедневно',
     'Weekly': 'Еженедельно',
     'Monthly': 'Ежемесячно',
-    'Rarely': 'Редко'
-})
+    'Rarely': 'Редко',
+    'Every 3 Months': 'Каждые 3 месяца',
+    'Bi-Weekly': 'Дважды в неделю',
+    'Quarterly': 'Квартально',
+    'Fortnightly': 'Каждые 2 недели',
+    'Annually': 'Ежегодно'})
 if 'Payment Method' in df.columns:
     df['Payment Method'] = df['Payment Method'].replace({
         'Credit Card': 'Карта',
         'Cash': 'Наличные',
-        'Online': 'Онлайн'
+        'Online': 'Онлайн',
+        'Mobile Payment': 'Мобильный платеж',
+        'Bank Transfer': 'Банковский перевод',
+        'Gift Card': 'Подарочная карта',
+        'PayPal': 'PayPal',
+        'Cryptocurrency': 'Криптовалюта',
+        'Other': 'Другое',
+        'Debit Card': 'Дебетовая карта',
+        'Venmo': 'Перевод на карту',
     })
 
 # Колонки для двух колонок
@@ -125,5 +140,3 @@ with col1:
         st.pyplot(fig)
     else:
         st.info("Нет данных о способе оплаты.")
-
-# ...остальной код замены...
