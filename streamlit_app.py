@@ -17,6 +17,17 @@ def load_data():
 
 df = load_data()
 
+
+# Очистка данных: убираем пробелы и приводим к одному регистру
+df['Gender'] = df['Gender'].astype(str).str.strip().str.capitalize()
+
+# Теперь замена на русский
+df['Gender'] = df['Gender'].replace({
+    'Female': 'Женщины',
+    'Male': 'Мужчины'
+})
+
+
 # Переводим значения столбцов на русский
 df['Category'] = df['Category'].replace({
     'Clothes': 'Одежда',
@@ -114,16 +125,5 @@ with col1:
         st.pyplot(fig)
     else:
         st.info("Нет данных о способе оплаты.")
-
-df = load_data()
-
-# Очистка данных: убираем пробелы и приводим к одному регистру
-df['Gender'] = df['Gender'].astype(str).str.strip().str.capitalize()
-
-# Теперь замена на русский
-df['Gender'] = df['Gender'].replace({
-    'Female': 'Женщины',
-    'Male': 'Мужчины'
-})
 
 # ...остальной код замены...
